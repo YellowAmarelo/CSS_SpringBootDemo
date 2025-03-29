@@ -5,7 +5,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import pt.ul.fc.css.example.demo.dtos.BookDTO;
 import pt.ul.fc.css.example.demo.entities.Author;
 import pt.ul.fc.css.example.demo.entities.Book;
@@ -47,6 +51,17 @@ public class BookController {
 
     BookDTO returnBook = new BookDTO(savedBook.getTitle(), savedBook.getAuthor().getId());
     return ResponseEntity.ok(returnBook);
+  }
+
+  @Operation(summary = "Delete a book by ID", description = "Deletes a book by its ID.")
+  @ApiResponse(responseCode = "200", description = "Book deleted successfully.")
+  @DeleteMapping
+  public ResponseEntity<Void> deleteBook(@RequestBody Long id) {
+    Book book =
+        bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
+
+    bookRepository.delete(book);
+    return ResponseEntity.ok().build();
   }
 
   @Operation(summary = "List all books", description = "List all books in the database.")
