@@ -113,5 +113,3 @@ Deve no terminal fazer logout do docker `docker logout` e refazer o login `docke
 ## Ao executar o `bash run.sh` tenho um erro 401 e não consigo descarregar as imagens
 
 Deve no terminal fazer logout do docker `docker logout` e refazer o login `docker login`.
-
-
